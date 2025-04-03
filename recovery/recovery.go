@@ -3,8 +3,8 @@ package recovery
 import (
 	"time"
 
-	"github.com/ARtorias742/DTP/monitoring"
-	"github.com/ARtorias742/DTP/network"
+	"github.com/artorias742/DTP/monitoring"
+	"github.com/artorias742/DTP/network"
 )
 
 func StartWithRecovery(peer *network.Peer) error {

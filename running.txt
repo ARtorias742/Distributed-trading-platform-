@@ -1,0 +1,27 @@
+go build -o trading-platform main.go
+
+./trading-platform
+
+PORT=8081 SEED_NODES=":8080" PEER_ID="node2" ./trading-platform
+
+PORT=8082 SEED_NODES=":8080" PEER_ID="node3" ./trading-platform
+
+./trading-platform &                # Node 1
+PORT=8081 SEED_NODES=":8080" PEER_ID="node2" ./trading-platform &  # Node 2
+PORT=8082 SEED_NODES=":8080" PEER_ID="node3" ./trading-platform &  # Node 3
+
+curl http://localhost:9090/metrics
+
+lsof -i :8080  # Check what's using the port
+kill -9 <PID>  # Kill the conflicting process
+
+rm trading-platform
+go build -o trading-platform main.go
+
+pkill -f trading-platform
+
+User 2 (Sell Order)
+curl -X POST -H "Content-Type: application/json" -d '{"type":"SELL","price":100.0,"quantity":5}' http://localhost:8083/order
+
+User 1 (Buy Order)
+curl -X POST -H "Content-Type: application/json" -d '{"type":"BUY","price":100.5,"quantity":10}' http://localhost:8083/order

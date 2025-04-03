@@ -3,7 +3,7 @@ package storage
 import (
 	"sync"
 
-	"github.com/ARtorias742/DTP/trading"
+	"github.com/artorias742/DTP/trading"
 )
 
 type Store struct {
@@ -20,11 +20,13 @@ func NewStore() *Store {
 func (s *Store) SaveOrder(order *trading.Order) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
+
 	s.orders[order.ID] = order
 }
 
 func (s *Store) GetOrder(id string) *trading.Order {
 	s.mutex.RLock()
 	defer s.mutex.RUnlock()
+
 	return s.orders[id]
 }

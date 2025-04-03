@@ -4,6 +4,8 @@ import (
 	"sort"
 	"sync"
 	"time"
+
+	"github.com/artorias742/DTP/monitoring"
 )
 
 type Trade struct {
